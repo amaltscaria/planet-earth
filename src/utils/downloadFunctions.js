@@ -1,85 +1,58 @@
+import { toPng } from "html-to-image";
 import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 
-export const downloadPDF = () => {
-    // Create a new jsPDF instance
-    const pdf = new jsPDF("portrait", "pt", "a4");
+export const downloadAsPDF = () => {
+  const certificateElement = document.getElementById("certificate");
 
-    // Set up fonts, colors, and styles
-    pdf.setFont("Helvetica", "bold");
-    pdf.setFontSize(30);
-    pdf.setTextColor(40, 40, 40);
+  // Ensure that the element width is fully captured
+  const scale = 2; // Increase scale for better resolution
+  const elementWidth = certificateElement.offsetWidth * scale;
+  const elementHeight = certificateElement.offsetHeight * scale;
 
-    // Title of the certificate
-    pdf.text("Certificate of Achievement", pdf.internal.pageSize.getWidth() / 2, 100, { align: "center" });
+  // Use html-to-image to convert the certificate element to a PNG image
+  toPng(certificateElement, {
+    pixelRatio: scale, // Scale the output for better quality and size
+    width: elementWidth,  // Set width manually
+    height: elementHeight, // Set height manually
+    style: {
+      transform: `scale(${scale})`,  // Scale the element to ensure no clipping
+      transformOrigin: 'top left',
+      width: `${certificateElement.offsetWidth}px`, // Ensure the element maintains its size
+      height: `${certificateElement.offsetHeight}px`,
+      margin: 0,  // Remove any margin
+      padding: 0, // Remove any padding
+    },
+  })
+    .then((dataUrl) => {
+      // Create a new jsPDF instance with A4 size
+      const pdf = new jsPDF({
+        orientation: "portrait",
+        unit: "pt", // Points
+        format: "a4", // A4 size
+      });
 
-    // Subtitle or recipient's name
-    pdf.setFont("Helvetica", "normal");
-    pdf.setFontSize(20);
-    pdf.text("This is to certify that", pdf.internal.pageSize.getWidth() / 2, 160, { align: "center" });
+      // A4 dimensions in points
+      const a4Width = 595.28;
+      const a4Height = 841.89;
 
-    pdf.setFont("Helvetica", "bold");
-    pdf.setFontSize(26);
-    pdf.text("[Recipient's Name]", pdf.internal.pageSize.getWidth() / 2, 200, { align: "center" });
+      // Calculate the new dimensions based on scaling
+      const scaledWidth = a4Width;  // Set the width to match A4 size
+      const scaledHeight = (elementHeight / elementWidth) * a4Width; // Maintain aspect ratio for height
 
-    // Additional text
-    pdf.setFont("Helvetica", "normal");
-    pdf.setFontSize(16);
-    pdf.text(
-        "Has successfully completed the requirements of the course",
-        pdf.internal.pageSize.getWidth() / 2,
-        240,
-        { align: "center" }
-    );
+      // Add the image to the PDF at coordinates (0, 0) to remove white space
+      pdf.addImage(
+        dataUrl,
+        "PNG",
+        0, // Set left margin to 0
+        0, // Set top margin to 0
+        scaledWidth,
+        scaledHeight
+      );
 
-    pdf.text("on [Date]", pdf.internal.pageSize.getWidth() / 2, 280, { align: "center" });
-
-    // Add a logo or other images (if any)
-    const img = "[Your Image URL or Data URI]";
-    pdf.addImage(img, "PNG", 40, 40, 100, 100); // Adjust positioning and size as needed
-
-    // Signature line
-    pdf.setFontSize(14);
-    pdf.text("_______________________", 100, pdf.internal.pageSize.getHeight() - 100);
-    pdf.text("Authorized Signature", 100, pdf.internal.pageSize.getHeight() - 80);
-
-    // Save the PDF
-    pdf.save("certificate.pdf");
-};
-
-
-export const downloadJPG = async (elementId) => {
-    const certificateElement = document.getElementById(elementId);
-    if (!certificateElement) return;
-
-    // Clone the element and set its style
-    const clonedElement = certificateElement.cloneNode(true);
-    clonedElement.style.position = "absolute";
-    clonedElement.style.top = "-9999px";
-    clonedElement.style.left = "-9999px";
-    clonedElement.style.borderRadius = "0";
-    clonedElement.style.borderWidth = "0";
-
-    document.body.appendChild(clonedElement);
-
-    // Capture the canvas
-    const canvas = await html2canvas(clonedElement, {
-        scale: 2,
-        useCORS: true,
-        scrollX: -window.scrollX,
-        scrollY: -window.scrollY,
-        width: clonedElement.offsetWidth,
-        height: clonedElement.offsetHeight,
+      // Save the PDF
+      pdf.save("certificate.pdf");
+    })
+    .catch((error) => {
+      console.error("Error generating PDF: ", error);
     });
-
-    const imgData = canvas.toDataURL("image/jpeg", 1.0);
-
-    // Remove the cloned element
-    document.body.removeChild(clonedElement);
-
-    // Create a link for downloading the image
-    const link = document.createElement("a");
-    link.href = imgData;
-    link.download = "certificate.jpg";
-    link.click();
 };
