@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import emailIcon from "../assets/emailIcon.svg";
 import emailIconDark from "../assets/emailIconDark.svg";
 import facebookIcon from "../assets/facebookIcon.svg";
@@ -25,10 +25,19 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { downloadAsPDF } from "../utils/downloadFunctions";
+import { downloadAsPDF } from "../utils/downloadAsPDF";
+import { downloadAsJPEG } from "../utils/downloadJPEG";
+import { shareJPEG } from "../utils/shareJPEG";
 
-const ShareAndDownload = () => {
-  const [shareUrl, setShareUrl] = useState("https://join.planetearthsummit.eu/uploads/5353454364534.jpg");
+import { formatDate } from "../utils/formatDate";
+import { generateCertificateNumber } from "../utils/uniqueCertificateNumber";
+const uniqueCertificateNumber = generateCertificateNumber();
+const date = formatDate(new Date());
+
+const ShareAndDownload = ({ name }) => {
+  const [shareUrl, setShareUrl] = useState(
+    "https://join.planetearthsummit.eu/uploads/5353454364534.jpg"
+  );
   const [isFacebookHovered, setIsFacebookHovered] = useState(false);
   const [isTwitterHovered, setIsTwitterHovered] = useState(false);
   const [isLinkedinHovered, setIsLinkedinHovered] = useState(false);
@@ -38,6 +47,35 @@ const ShareAndDownload = () => {
   const [isPdfHovered, setIsPdfHovered] = useState(false);
   const [isJpgHovered, setIsJpgHovered] = useState(false);
   const [isCopyHovered, setIsCopyHovered] = useState(false);
+
+  useEffect(() => {
+    const sendCertificate = async () => {
+      const imgData = await shareJPEG(name);
+
+      // Send to backend
+      try {
+        // const response = await fetch("http://localhost:3000/api/upload-certificate", {
+        const response = await fetch("https://join.planetearthsummit.eu/api/upload-certificate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ image: imgData }),
+        });
+
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();;
+        setShareUrl(data.filePath)
+      } catch (error) {
+        console.error("Error uploading certificate:", error);
+      }
+    };
+
+    sendCertificate();
+  }, []); // Run when name changes
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(shareUrl).then(
@@ -83,7 +121,7 @@ const ShareAndDownload = () => {
         <button
           // style={{ width: "163px", height: "60px" }}
           className="font-outfit text-xxs sm:text-base text-white border-2 border-custom-blue py-2  sm:px-3 px-2 rounded-4xl flex justify-between items-center hover:text-black hover:border-0 hover:bg-white w-20 sm:w-36 sm:h-12"
-            onClick={downloadAsPDF}
+          onClick={() => downloadAsPDF(name, date, uniqueCertificateNumber)}
           onMouseEnter={() => setIsPdfHovered(true)} // Set hover state to true
           onMouseLeave={() => setIsPdfHovered(false)} // Set hover state to false
         >
@@ -96,7 +134,7 @@ const ShareAndDownload = () => {
         </button>
         <button
           className="font-outfit text-xxs sm:text-base text-white border-2 border-custom-blue py-2 sm:px-3 px-2 rounded-4xl flex justify-between items-center hover:border-0 hover:text-black hover:bg-white w-20 sm:w-36 sm:h-12"
-          //   onClick={handleDownloadJPG}
+          onClick={() => downloadAsJPEG(name, date, uniqueCertificateNumber)}
           onMouseEnter={() => setIsJpgHovered(true)} // Set hover state to true
           onMouseLeave={() => setIsJpgHovered(false)} // Set hover state to false
         >

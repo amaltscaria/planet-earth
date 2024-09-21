@@ -4,8 +4,8 @@ import qr from "../assets/planetearthsummit - QR Code.png";
 import { formatDate } from "../utils/formatDate";
 import { generateCertificateNumber } from "../utils/uniqueCertificateNumber";
 
-const uniqueCertificateNumber = generateCertificateNumber();
-const date = formatDate(new Date());
+export const uniqueCertificateNumber = generateCertificateNumber();
+export const date = formatDate(new Date());
 
 const Certificate = ({name}) => {
     

@@ -23,16 +23,55 @@ const Signup = () => {
       [name]: value,
     }));
   };
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    const { isValid, errors } = validateForm(formData);
+  
+    // Collect form data
+    const formData = new FormData(e.target);
+    const formDataObject = {};
+    formData.forEach((value, key) => {
+      formDataObject[key] = value;
+    });
+
+    const { isValid, errors } = validateForm(formDataObject);
+  
     if (isValid) {
       setSubmitted(true);
+      // Send formData to Google Sheets
+      try {
+        const response = await fetch(
+          "https://script.google.com/macros/s/AKfycbwOSttojDNQKwXaObR6HgyCPltbRMHgBWbhCw06wI-SoKmJ0hzAp2YEZokBJnU0xJfteQ/exec",
+          {
+            redirect: "follow",
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+            },
+            body: new URLSearchParams(formDataObject).toString(),
+          }
+        );
+  
+        
+        // const result = await response.json();
+        // if (result.status === "success") {
+        // } else {
+          // Handle error response
+          // console.error("Error sending data to Google Sheets:", result);
+          // console.log('failed')
+        // }
+      } catch (error) {
+        // console.error("Error:", error);
+        // document.getElementById("message").textContent =
+        //   "An error occurred during submission.";
+      }
     } else {
       setErrors(errors);
+      // Optionally display form validation errors
+      document.getElementById("message").textContent =
+        "Please fix the errors in the form.";
     }
   };
-
+  
   return (
     <div
       style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -40,7 +79,7 @@ const Signup = () => {
     >
       <div className="flex-1 flex flex-col items-center justify-center pt-8 sm:p-8">
         {submitted ? (
-          <ShareAndDownload />
+          <ShareAndDownload name={formData.name} />
         ) : (
           <h1 className="me-24 sm:me-0 text-white outfit-extrabold xs:leading-custom-tight text-2xl sm:text-4xl md:text-5xl lg:text-7xl whitespace-pre-line">
             Planet Earth{"\n"}Pledge{"\n"}Certificate
