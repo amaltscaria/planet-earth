@@ -161,7 +161,7 @@ const Signup = () => {
             </div>
             <button
               type="submit"
-              className="w-full border-2 border-custom-blue font-outfit text-white py-2 rounded-4xl"
+              className="w-full border-2 border-custom-blue hover:bg-white hover:text-black hover:border-transparent font-outfit text-white py-2 rounded-4xl"
             >
               Get Certificate Now!
             </button>
