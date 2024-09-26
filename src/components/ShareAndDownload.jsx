@@ -55,20 +55,23 @@ const ShareAndDownload = ({ name }) => {
       // Send to backend
       try {
         // const response = await fetch("http://localhost:3000/api/upload-certificate", {
-        const response = await fetch("https://join.planetearthsummit.eu/api/upload-certificate", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ image: imgData }),
-        });
+        const response = await fetch(
+          "https://join.planetearthsummit.eu/api/upload-certificate",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ image: imgData }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
 
-        const data = await response.json();;
-        setShareUrl(data.filePath)
+        const data = await response.json();
+        setShareUrl(data.filePath);
       } catch (error) {
         console.error("Error uploading certificate:", error);
       }

@@ -7,8 +7,7 @@ import { generateCertificateNumber } from "../utils/uniqueCertificateNumber";
 export const uniqueCertificateNumber = generateCertificateNumber();
 export const date = formatDate(new Date());
 
-const Certificate = ({name}) => {
-    
+const Certificate = ({ name }) => {
   return (
     <div className="flex justify-center items-center">
       <div

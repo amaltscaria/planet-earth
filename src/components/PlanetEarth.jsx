@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useState} from "react";
 import backgroundImage from "../assets/Planet Earth - Certificate bg.jpg";
 import { validateForm } from "../utils/validation.js";
 import "./styles.css";
@@ -25,7 +24,7 @@ const Signup = () => {
   };
   const submitHandler = async (e) => {
     e.preventDefault();
-  
+
     // Collect form data
     const formData = new FormData(e.target);
     const formDataObject = {};
@@ -34,12 +33,12 @@ const Signup = () => {
     });
 
     const { isValid, errors } = validateForm(formDataObject);
-  
+
     if (isValid) {
       setSubmitted(true);
       // Send formData to Google Sheets
       try {
-        const response = await fetch(
+        await fetch(
           "https://script.google.com/macros/s/AKfycbwOSttojDNQKwXaObR6HgyCPltbRMHgBWbhCw06wI-SoKmJ0hzAp2YEZokBJnU0xJfteQ/exec",
           {
             redirect: "follow",
@@ -50,32 +49,16 @@ const Signup = () => {
             body: new URLSearchParams(formDataObject).toString(),
           }
         );
-  
-        
-        // const result = await response.json();
-        // if (result.status === "success") {
-        // } else {
-          // Handle error response
-          // console.error("Error sending data to Google Sheets:", result);
-          // console.log('failed')
-        // }
-      } catch (error) {
-        // console.error("Error:", error);
-        // document.getElementById("message").textContent =
-        //   "An error occurred during submission.";
-      }
+      } catch (error) {}
     } else {
       setErrors(errors);
-      // Optionally display form validation errors
-      document.getElementById("message").textContent =
-        "Please fix the errors in the form.";
     }
   };
-  
+
   return (
     <div
       style={{ backgroundImage: `url(${backgroundImage})` }}
-      className="bg-cover bg-center bg-no-repeat min-h-screen flex flex-col sm:flex-col md:flex-col lg:flex-row"
+      className="bg-cover bg-center bg-no-repeat min-h-screen min-w-fit flex flex-col sm:flex-col md:flex-col lg:flex-row"
     >
       <div className="flex-1 flex flex-col items-center justify-center pt-8 sm:p-8">
         {submitted ? (
