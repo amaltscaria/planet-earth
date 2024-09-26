@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import backgroundImage from "../assets/Planet Earth - Certificate bg.jpg";
 import { validateForm } from "../utils/validation.js";
 import "./styles.css";
@@ -38,17 +38,14 @@ const Signup = () => {
       setSubmitted(true);
       // Send formData to Google Sheets
       try {
-        await fetch(
-          "https://script.google.com/macros/s/AKfycbwOSttojDNQKwXaObR6HgyCPltbRMHgBWbhCw06wI-SoKmJ0hzAp2YEZokBJnU0xJfteQ/exec",
-          {
-            redirect: "follow",
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-            },
-            body: new URLSearchParams(formDataObject).toString(),
-          }
-        );
+        await fetch(import.meta.env.VITE_GOOGLE_SHEET_WEB_URL, {
+          redirect: "follow",
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+          },
+          body: new URLSearchParams(formDataObject).toString(),
+        });
       } catch (error) {}
     } else {
       setErrors(errors);
