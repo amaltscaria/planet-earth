@@ -1,5 +1,5 @@
 import certificateBackgroundImage from "../assets/certificate-bg.jpg";
-import logo from "../assets/Logo.png";
+import logo from "../assets/logo.png";
 import qr from "../assets/planetearthsummit - QR Code.png";
 import { formatDate } from "../utils/formatDate";
 import { generateCertificateNumber } from "../utils/uniqueCertificateNumber";
