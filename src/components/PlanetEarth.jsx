@@ -86,13 +86,11 @@ const Signup = () => {
                 name="name"
                 onChange={handleChange}
               />
-              <p className="text-red-600 font-outfitn md:text-base text-xs">
                 {errors.name && (
                   <p className="text-red-600 font-outfit md:text-base text-xs">
                     {errors.name}
                   </p>
                 )}
-              </p>
             </div>
             <div className="mb-4">
               <input
@@ -104,13 +102,11 @@ const Signup = () => {
                 value={formData.email}
                 onChange={handleChange}
               />
-              <p className="text-red-600 font-outfit md:text-base text-xs">
                 {errors.email && (
                   <p className="text-red-600 font-outfit md:text-base text-xs">
                     {errors.email}
                   </p>
                 )}
-              </p>
             </div>
             <div className="mb-4">
               <input
@@ -122,13 +118,11 @@ const Signup = () => {
                 value={formData.number}
                 onChange={handleChange}
               />
-              <p className="text-red-600 font-outfit md:text-base text-xs">
                 {errors.number && (
                   <p className="text-red-600 font-outfit md:text-base text-xs">
                     {errors.number}
                   </p>
                 )}
-              </p>
             </div>
             <div className="mb-4">
               <input
@@ -140,13 +134,11 @@ const Signup = () => {
                 value={formData.country}
                 onChange={handleChange}
               />
-              <p className="text-red-600 font-outfit md:text-base text-xs">
                 {errors.country && (
                   <p className="text-red-600 font-outfit md:text-base text-xs">
                     {errors.country}
                   </p>
                 )}
-              </p>
             </div>
             <div className="mb-4">
               <input
