@@ -36,7 +36,7 @@ const date = formatDate(new Date());
 
 const ShareAndDownload = ({ name }) => {
   const [shareUrl, setShareUrl] = useState(
-    "https://join.planetearthsummit.eu/uploads/5353454364534.jpg"
+    "generating link..."
   );
   const [isFacebookHovered, setIsFacebookHovered] = useState(false);
   const [isTwitterHovered, setIsTwitterHovered] = useState(false);

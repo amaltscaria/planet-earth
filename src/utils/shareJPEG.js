@@ -4,6 +4,8 @@ import qr from "../assets/planetearthsummit - QR Code.png";
 import { date, uniqueCertificateNumber as id } from "../components/Certificate";
 
 export const shareJPEG = async (name) => {
+  // Wait for fonts to load
+  await document.fonts.ready;
   const canvas = document.createElement("canvas");
   const ctx = canvas.getContext("2d");
 
