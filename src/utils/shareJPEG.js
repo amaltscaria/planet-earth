@@ -30,7 +30,7 @@ export const shareJPEG = async (name) => {
         ctx.drawImage(logo, 300, 300, 500, 600); // Adjust position and size
 
         // Title Text
-        ctx.font = "400 60px Outfit"; // Adjust font size and family
+        ctx.font = "normal 60px Outfit"; // Adjust font size and family
         ctx.fillStyle = "white";
         ctx.fillText("CERTIFICATE OF COMMITMENT TO", 300, 1050); // Adjust position
 

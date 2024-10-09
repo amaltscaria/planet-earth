@@ -35,9 +35,7 @@ const uniqueCertificateNumber = generateCertificateNumber();
 const date = formatDate(new Date());
 
 const ShareAndDownload = ({ name }) => {
-  const [shareUrl, setShareUrl] = useState(
-    "generating link..."
-  );
+  const [shareUrl, setShareUrl] = useState("generating link...");
   const [isFacebookHovered, setIsFacebookHovered] = useState(false);
   const [isTwitterHovered, setIsTwitterHovered] = useState(false);
   const [isLinkedinHovered, setIsLinkedinHovered] = useState(false);
@@ -54,7 +52,9 @@ const ShareAndDownload = ({ name }) => {
 
       // Send to backend
       try {
-        // const response = await fetch("http://localhost:3000/api/upload-certificate", {
+        // const response = await fetch(
+        //   "http://localhost:3000/api/upload-certificate",
+        //   {
         const response = await fetch(
           "https://join.planetearthsummit.eu/api/upload-certificate",
           {
