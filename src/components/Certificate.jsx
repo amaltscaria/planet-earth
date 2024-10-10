@@ -70,7 +70,7 @@ const Certificate = ({ name }) => {
           </ul>
         </div>
         <div className="sm:mt-4 mt-2 outfit-medium">
-          <p className="sm:text-base text-sm font-bold outfit-extrabold">
+          <p className="sm:text-base text-sm outfit-extrabold">
             {/* {formatDate(new Date())} */}
             {date}
           </p>
