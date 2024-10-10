@@ -35,7 +35,7 @@ export const shareJPEG = async (name) => {
         ctx.fillText("CERTIFICATE OF COMMITMENT TO", 300, 1050); // Adjust position
 
         // Main Heading
-        ctx.font = "normal 180px Outfit";
+        ctx.font = "bold 180px Outfit";
         ctx.fillText("PLANET EARTH", 300, 1220); // Adjust position
 
         // Subheading Text
@@ -47,7 +47,7 @@ export const shareJPEG = async (name) => {
         ); // Adjust position
 
         // Name of Participant
-        ctx.font = "900 130px Outfit";
+        ctx.font = "bold 130px Outfit";
         ctx.fillText(name.toUpperCase(), 300, 1520); // Adjust position
 
         // Certificate Body
@@ -64,7 +64,7 @@ export const shareJPEG = async (name) => {
         });
 
         // Key Commitments Section
-        ctx.font = "900 50px Outfit";
+        ctx.font = "bold 50px Outfit";
         ctx.fillText("KEY COMMITMENTS", 300, 2010); // Adjust position
 
         ctx.font = "400 50px Outfit";
@@ -82,6 +82,7 @@ export const shareJPEG = async (name) => {
         // Add Date and Certificate Number
         ctx.font = "normal 70px Outfit";
         ctx.fillText(date.toUpperCase(), 300, 2540); // Adjust position
+        ctx.font = "normal 70px Outfit";
         ctx.fillText(id, 300, 2640); // Adjust position
 
         // Add QR Code
