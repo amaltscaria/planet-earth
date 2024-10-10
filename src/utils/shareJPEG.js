@@ -35,7 +35,7 @@ export const shareJPEG = async (name) => {
         ctx.fillText("CERTIFICATE OF COMMITMENT TO", 300, 1050); // Adjust position
 
         // Main Heading
-        ctx.font = "900 180px Outfit";
+        ctx.font = "normal 180px Outfit";
         ctx.fillText("PLANET EARTH", 300, 1220); // Adjust position
 
         // Subheading Text
