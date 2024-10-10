@@ -80,7 +80,7 @@ export const shareJPEG = async (name) => {
         });
 
         // Add Date and Certificate Number
-        ctx.font = "normal 70px Outfit";
+        ctx.font = "400 70px Outfit";
         ctx.fillText(date.toUpperCase(), 300, 2540); // Adjust position
         ctx.font = "normal 70px Outfit";
         ctx.fillText(id, 300, 2640); // Adjust position
