@@ -89,7 +89,7 @@ export const downloadAsPDF = (name) => {
   pdf.setFontSize(14);
   pdf.text(date.toUpperCase(), 27, 210);
   pdf.setFont("Outfit-Medium", "normal");
-  pdf.setFontSize(12);
+  pdf.setFontSize(13);
   pdf.text(id, 27, 218);
 
   // Add the QR Code
