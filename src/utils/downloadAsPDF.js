@@ -87,9 +87,9 @@ export const downloadAsPDF = (name) => {
   // Add Date and Certificate Number
   pdf.setFont("Outfit-ExtraBold", "bold");
   pdf.setFontSize(14);
-  pdf.text(date, 27, 210);
+  pdf.text(date.toUpperCase(), 27, 210);
   pdf.setFont("Outfit-Medium", "normal");
-  pdf.setFontSize(14);
+  pdf.setFontSize(12);
   pdf.text(id, 27, 218);
 
   // Add the QR Code
