@@ -72,8 +72,9 @@ export const downloadAsJPEG = (name) => {
       });
 
       // Add Date and Certificate Number
-      ctx.font = "normal 70px Outfit";
+      ctx.font = "900 70px Outfit";
       ctx.fillText(date.toUpperCase(), 300, 2540); // Adjust position
+      ctx.font = "600 60px Outfit";
       ctx.fillText(id, 300, 2640); // Adjust position
 
       // Add QR Code
